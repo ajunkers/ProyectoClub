@@ -47,7 +47,7 @@
 		<button onclick="execCmd('createLink', prompt('Enter a URL:', 'http://'))"><i class="fa fa-link"></i></button>
 		<button onclick="execCmd('unlink')"><i class="fa fa-unlink"></i></button>
 		<!-- <button onclick="toggleSource();"><i class="fa fa-code"></i></button> -->
-		<button onclick="toggleEdit(this)" class="tggEditOn">Toggle Edit</button>
+		<button onclick="toggleEdit(this)" class="tggEditOn"><i class="fa fa-unlock-alt"></i></button>
 
 		<select  onchange="execCommandWhithArg('fontName', this.value)">
 			<option value="Arial">Arial</option>
@@ -99,11 +99,20 @@
 			if (isInEditMode) {
 				toggle.classList.add('tggEditOff');
 				toggle.classList.remove('tggEditOn');
+
+				toggle.firstChild.classList.add('fa-lock');
+				toggle.firstChild.classList.remove('fa-unlock-alt');
+
+
 				textField.document.designMode = 'off';
 				isInEditMode = false;
 			}else{
 				toggle.classList.add('tggEditOn');
 				toggle.classList.remove('tggEditOff');
+
+				toggle.firstChild.classList.add('fa-unlock-alt');
+				toggle.firstChild.classList.remove('fa-lock');
+
 				textField.document.designMode = 'on';
 				isInEditMode = true;
 			}
