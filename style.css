@@ -1,7 +1,15 @@
-#text
+.text
 {	
 	justify-content: flex-end;
 	overflow-y: scroll;
 	width: 90%;
 	height: 300px;
+}
+
+.tggEditOn{
+	background: #6FE2FE;
+}
+
+.tggEditOff{
+	background: #FF3E58;
 }
