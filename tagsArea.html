@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>tags</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+	<textarea id="textarea" class="example" rows="1"></textarea>
+
+	<div style="margin-top: 20px">
+		<input type="text" id="tagname" placeholder="tag name" />
+		<button id="addtag" class="btn">Click to add tag</button>
+	</div>
+
+</body>
+	<script type="text/javascript">
+		$('#textarea').textext({ plugins: 'tags' });
+
+		$('#addtag').bind('click', function(e)
+		{
+			$('#textarea').textext()[0].tags().addTags([ $('#tagname').val() ]);
+			$('#tagname').val('');
+		});
+	</script>
+</html>

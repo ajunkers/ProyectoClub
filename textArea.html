@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>textArea</title>
+</head>
+<body>
+	<div id="text" contentEditable="true"></div>
+	<br>
+	<button onclick="addTag('h1')">Title</button>
+	<button onclick="addTag('h2')">Subtitle</button>
+	<button onclick="addTag('b')"><b>B</b></button>
+	<button onclick="addTag('i')"><i>i</i></button>
+</body>
+
+<script type="text/javascript">
+	function addTag(tag, wrapTag) 
+	{
+		var myTag = document.createElement(tag);
+
+		if (window.getSelection) {
+			var selectedText = window.getSelection();
+
+			if (selectedText.rangeCount) {
+				var range = selectedText.getRangeAt(0).cloneRange();
+				range.surroundContents(myTag);
+				selectedText.removeAllRanges();
+				selectedText.addRange(range);
+			}
+		}	
+	}
+
+	function alerta(){
+		var selectedText = window.getSelection();
+		var prueba = $(selectedText).parent();
+
+		alert(prueba.anchorNode);
+	}
+
+
+
+</script>
+</html>
