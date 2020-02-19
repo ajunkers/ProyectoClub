@@ -3,7 +3,13 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- Font Awesome Library -->
 	<script src="https://use.fontawesome.com/0e22f96d6b.js"></script>
+
+	<!-- LoadImages Library -->
+	<script src="JavaScript-Load-Image-2.26.0/js/load-image.js"></script>
+
 	<title>textArea</title>
 </head>
 <body onload="enableEditMode()">
@@ -47,7 +53,7 @@
 		<button onclick="execCmd('createLink', prompt('Enter a URL:', 'http://'))"><i class="fa fa-link"></i></button>
 		<button onclick="execCmd('unlink')"><i class="fa fa-unlink"></i></button>
 		<!-- <button onclick="toggleSource();"><i class="fa fa-code"></i></button> -->
-		<button onclick="toggleEdit(this)" class="tggEditOn">Toggle Edit</button>
+		<button onclick="toggleEdit(this)" class="tggEditOn"><i class="fa fa-unlock-alt"></i></button>
 
 		<select  onchange="execCommandWhithArg('fontName', this.value)">
 			<option value="Arial">Arial</option>
@@ -72,16 +78,28 @@
 		Fore Color: <input type="color" name="foreColor"  onchange="execCommandWhithArg('foreColor', this.value)"/>
 		Background: <input type="color" name="backgroundColor"  onchange="execCommandWhithArg('hiliteColor', this.value)"/>
 
-		<button onclick="execCommandWhithArg('insertImage', prompt('Enter the image URL', ''))"><i class="fa fa-file-image-o"></i></button>
+		<!-- <button onclick="uploadImg(execCommandWhithArg('insertImage', prompt('', '')))"><i class="fa fa-file-image-o"></i></button> -->
+		<label for="fileImg" style="cursor: pointer;"><i class="fa fa-file-image-o"></i></label>
+		<input type="file"  accept="image/*" name="image" id="fileImg"  multiple="false" hidden>
 		<button onclick="execCmd('selectAll')">Select all</button>
 	</div>
 
-	<iframe class="text" src="" name="textField"></iframe>
-
+	<iframe class="text" src="" name="textField" id="textField"></iframe>
+	<br>
 	<button onclick="save()"> Save </button>
 
 	<script type="text/javascript">
 		var isInEditMode = true;
+
+		document.getElementById("fileImg").onchange = function(e) {
+			loadImage(
+				e.target.files[0],
+				function(img) {
+					document.body.appendChild(img);
+				},
+				{ maxWidth: 600 } // Options
+			);
+		};
 
 		function enableEditMode(){
 			textField.document.designMode = 'on';
@@ -99,14 +117,45 @@
 			if (isInEditMode) {
 				toggle.classList.add('tggEditOff');
 				toggle.classList.remove('tggEditOn');
+
+				toggle.firstChild.classList.add('fa-lock');
+				toggle.firstChild.classList.remove('fa-unlock-alt');
+
+
 				textField.document.designMode = 'off';
 				isInEditMode = false;
 			}else{
 				toggle.classList.add('tggEditOn');
 				toggle.classList.remove('tggEditOff');
+
+				toggle.firstChild.classList.add('fa-unlock-alt');
+				toggle.firstChild.classList.remove('fa-lock');
+
 				textField.document.designMode = 'on';
 				isInEditMode = true;
 			}
+		}
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#textField')
+						.attr('src', e.target.result);
+				};
+			reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		function uploadImg(e){
+				loadImage(
+					e.target.files[0],
+					function(img) {
+						document.body.appendChild(img);
+					},
+					{ maxWidth: 600 } // Options
+				);
+			
 		}
 
 	</script>
